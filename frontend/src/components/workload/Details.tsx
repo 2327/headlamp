@@ -7,6 +7,7 @@ import {
   ContainersSection,
   DetailsGrid,
   MetadataDictGrid,
+  OwnedPodsSection,
   ReplicasSection,
 } from '../common/Resource';
 
@@ -46,7 +47,11 @@ export default function WorkloadDetails(props: WorkloadDetailsProps) {
       sectionsFunc={item => (
         <>
           <ReplicasSection resource={item?.jsonData} />
-          <ContainersSection resource={item?.jsonData} />
+          {item?.jsonData.kind !== 'Deployment' ? (
+            <ContainersSection resource={item?.jsonData} />
+          ) : (
+            <OwnedPodsSection resource={item?.jsonData} />
+          )}
           <DetailsViewPluginRenderer resource={item} />
         </>
       )}

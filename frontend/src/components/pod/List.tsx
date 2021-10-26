@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { ApiError } from '../../lib/k8s/apiProxy';
 import Pod from '../../lib/k8s/pod';
 import { useFilterFunc } from '../../lib/util';
 import { SectionFilterHeader } from '../common';
@@ -21,9 +22,15 @@ export function makePodStatusLabel(pod: Pod) {
 
   return <StatusLabel status={status}>{phase}</StatusLabel>;
 }
+interface PodListProps {
+  pods?: Pod[];
+  error?: ApiError | null;
+}
+export default function PodList(props: PodListProps) {
+  const { pods, error } = props;
+  const [apiPods, apiError] = Pod.useList();
 
-export default function PodList() {
-  const [pods, error] = Pod.useList();
+  console.log(pods, apiPods);
   const filterFunc = useFilterFunc();
   const { t } = useTranslation('glossary');
 
@@ -39,7 +46,7 @@ export default function PodList() {
       <SimpleTable
         rowsPerPage={[15, 25, 50]}
         filterFunction={filterFunc}
-        errorMessage={Pod.getErrorMessage(error)}
+        errorMessage={Pod.getErrorMessage(error ? error : apiError)}
         columns={[
           {
             label: t('frequent|Name'),
@@ -76,7 +83,7 @@ export default function PodList() {
               new Date(p1.metadata.creationTimestamp).getTime(),
           },
         ]}
-        data={pods}
+        data={!!pods ? pods : apiPods}
         defaultSortingColumn={5}
       />
     </SectionBox>

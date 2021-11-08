@@ -22,7 +22,8 @@ export function makePodStatusLabel(pod: Pod) {
 
   return <StatusLabel status={status}>{phase}</StatusLabel>;
 }
-interface PodListProps {
+
+export interface PodListProps {
   pods?: Pod[];
   error?: ApiError | null;
 }

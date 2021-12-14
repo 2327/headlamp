@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots crd/CustomResourceDetails Error Getting CRD 1`] = `
+<div
+  id="root"
+>
+  <div
+    class="MuiBox-root MuiBox-root"
+  >
+    <p
+      class="MuiTypography-root MuiTypography-body1 MuiTypography-colorError MuiTypography-alignCenter"
+    >
+      Error getting custom resource definition : An error happened
+    </p>
+  </div>
+</div>
+`;
+
+exports[`Storyshots crd/CustomResourceDetails Error Getting Details 1`] = `
+<div
+  id="root"
+>
+  <div
+    class="MuiBox-root MuiBox-root makeStyles-loaderContainer"
+  >
+    <div
+      class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+      role="progressbar"
+      style="width: 40px; height: 40px;"
+      title="Loading custom resource details"
+    >
+      <svg
+        class="MuiCircularProgress-svg"
+        viewBox="22 22 44 44"
+      >
+        <circle
+          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+          cx="44"
+          cy="44"
+          fill="none"
+          r="20.2"
+          stroke-width="3.6"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots crd/CustomResourceDetails Loading CRD 1`] = `
+<div
+  id="root"
+>
+  <div
+    class="MuiBox-root MuiBox-root makeStyles-loaderContainer"
+  >
+    <div
+      class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+      role="progressbar"
+      style="width: 40px; height: 40px;"
+      title="Loading custom resource details"
+    >
+      <svg
+        class="MuiCircularProgress-svg"
+        viewBox="22 22 44 44"
+      >
+        <circle
+          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+          cx="44"
+          cy="44"
+          fill="none"
+          r="20.2"
+          stroke-width="3.6"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots crd/CustomResourceDetails Loading Details 1`] = `
+<div
+  id="root"
+>
+  <div
+    class="MuiBox-root MuiBox-root makeStyles-loaderContainer"
+  >
+    <div
+      class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+      role="progressbar"
+      style="width: 40px; height: 40px;"
+      title="Loading custom resource details"
+    >
+      <svg
+        class="MuiCircularProgress-svg"
+        viewBox="22 22 44 44"
+      >
+        <circle
+          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+          cx="44"
+          cy="44"
+          fill="none"
+          r="20.2"
+          stroke-width="3.6"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots crd/CustomResourceDetails No Error 1`] = `
+<div
+  id="root"
+>
+  <div
+    class="MuiBox-root MuiBox-root makeStyles-loaderContainer"
+  >
+    <div
+      class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+      role="progressbar"
+      style="width: 40px; height: 40px;"
+      title="Loading custom resource details"
+    >
+      <svg
+        class="MuiCircularProgress-svg"
+        viewBox="22 22 44 44"
+      >
+        <circle
+          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+          cx="44"
+          cy="44"
+          fill="none"
+          r="20.2"
+          stroke-width="3.6"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;

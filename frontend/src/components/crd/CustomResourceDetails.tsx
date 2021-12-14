@@ -11,7 +11,6 @@ import Empty from '../common/EmptyContent';
 import Loader from '../common/Loader';
 import { ConditionsTable, MainInfoSection, PageGrid } from '../common/Resource';
 
-/* istanbul ignore next */
 export default function CustomResourceDetails() {
   const {
     crd: crdName,
@@ -24,29 +23,38 @@ export default function CustomResourceDetails() {
   }>();
   const [crd, setCRD] = React.useState<CRD | null>(null);
   const [error, setError] = React.useState<ApiError | null>(null);
-
-  const { t } = useTranslation('glossary');
+  const [item, setItem] = React.useState<KubeCRD | null>(null);
+  const [detailsError, setDetailsError] = React.useState<ApiError | null>(null);
 
   const namespace = ns === '-' ? undefined : ns;
 
+  React.useEffect(() => {
+    if (!crd) return;
+
+    const versions: [string, string, string][] = (crd.jsonData as KubeCRD).spec.versions.map(
+      versionInfo => [crd.spec.group, versionInfo.name, crd.spec.names.plural]
+    );
+
+    const CRClass = makeCustomResourceClass(versions, !!namespace);
+    CRClass.useApiGet(setItem, crName, namespace, setDetailsError);
+  }, [crd]);
+
   CRD.useApiGet(setCRD, crdName, undefined, setError);
 
-  return !crd ? (
-    !!error ? (
-      <Empty color="error">
-        {t(`crd|Error getting custom resource definition ${crdName}: ${error.message}`)}
-      </Empty>
-    ) : (
-      <Loader title={t('crd|Loading custom resource details')} />
-    )
-  ) : (
-    <CustomResourceDetailsRenderer crd={crd} crName={crName} namespace={namespace} />
+  return (
+    <PureCustomResourceDetails
+      crd={crd}
+      crName={crName}
+      crdName={crdName}
+      item={item}
+      error={error}
+      detailsError={detailsError}
+    />
   );
 }
 
 type AdditionalPrinterColumns = KubeCRD['spec']['versions'][0]['additionalPrinterColumns'];
 
-/* istanbul ignore next */
 function getExtraColumns(crd: CRD, apiVersion: string) {
   const version = (crd.jsonData as KubeCRD).spec.versions.find(
     version => version.name === apiVersion
@@ -54,7 +62,6 @@ function getExtraColumns(crd: CRD, apiVersion: string) {
   return version?.additionalPrinterColumns;
 }
 
-/* istanbul ignore next */
 function getExtraInfo(extraInfoSpec: AdditionalPrinterColumns, item: KubeCRD) {
   const extraInfo: NameValueTableRow[] = [];
   extraInfoSpec.forEach(spec => {
@@ -92,29 +99,38 @@ function getExtraInfo(extraInfoSpec: AdditionalPrinterColumns, item: KubeCRD) {
   return extraInfo;
 }
 
-/* istanbul ignore next */
-function CustomResourceDetailsRenderer(props: { crd: CRD; crName: string; namespace?: string }) {
-  const { crd, crName, namespace } = props;
-  const [item, setItem] = React.useState<KubeCRD | null>(null);
-  const [error, setError] = React.useState<ApiError | null>(null);
+export interface PureCustomResourceDetailsProps {
+  crd: CRD | null;
+  crName: string;
+  crdName: string;
+  item: KubeCRD | null;
+  error: ApiError | null;
+  detailsError: ApiError | null;
+}
 
+export function PureCustomResourceDetails(props: PureCustomResourceDetailsProps) {
+  const { crd, crName, crdName, item, error, detailsError } = props;
+
+  console.log('asdf', JSON.stringify(props));
   const { t } = useTranslation('glossary');
 
-  let CRClass: ReturnType<typeof makeCustomResourceClass> | null = null;
-
-  const versions: [string, string, string][] = (crd.jsonData as KubeCRD).spec.versions.map(
-    versionInfo => [crd.spec.group, versionInfo.name, crd.spec.names.plural]
-  );
-  CRClass = makeCustomResourceClass(versions, !!namespace);
-  CRClass.useApiGet(setItem, crName, namespace, setError);
+  if (!crd) {
+    return !!error ? (
+      <Empty color="error">
+        {t(`crd|Error getting custom resource definition ${crdName}: ${error.message}`)}
+      </Empty>
+    ) : (
+      <Loader title={t('crd|Loading custom resource details')} />
+    );
+  }
 
   const apiVersion = item?.jsonData.apiVersion?.split('/')[1] || '';
   const extraColumns: AdditionalPrinterColumns = getExtraColumns(crd, apiVersion) || [];
 
   return !item ? (
-    !!error ? (
+    !!detailsError ? (
       <Empty color="error">
-        {t(`crd|Error getting custom resource1 ${crName}: ${error.message}`)}
+        {t(`crd|Error getting custom resource1 ${crName}: ${detailsError.message}`)}
       </Empty>
     ) : (
       <Loader title={t('crd|Loading custom resource details')} />

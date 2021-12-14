@@ -39,6 +39,7 @@ function CustomResourceLink(props: { resource: KubeCRD; crd: CRD; [otherProps: s
   const classes = useStyle();
   const { resource, crd, ...otherProps } = props;
 
+  console.log('CustomResourceLink', props);
   return (
     <Link
       className={classes.link}
@@ -62,6 +63,8 @@ export default function CustomResourceDefinitionDetails() {
   const [objects, setObjects] = React.useState<KubeCRD[] | null>([]);
   const [objectsError, setObjectsError] = React.useState<string | null>(null);
   const { t } = useTranslation('glossary');
+
+  console.log('CustomResourceDefinitionDetails');
 
   CRD.useApiGet(setItem, name, undefined, setError);
 

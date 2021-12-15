@@ -405,11 +405,16 @@ function VolumeMounts(props: VolumeMountsProps) {
       {mounts?.map((item, index) => (
         <Grid item key={`${item.name}__${index}`}>
           <Box display="flex">
-            <Typography className={classes.metadataValueLabel}>{item.mountPath}</Typography>
-            <Box px={2}>from</Box>
-            <Typography className={classes.metadataValueLabel}>{item.name}</Typography>
-            <Typography className={classes.metadataValueLabel} display="block">
-              <span>{item.readOnly ? '(readOnly)' : '(readWrite)'}</span>
+            <Typography>
+              <Typography component="span" className={classes.metadataValueLabel}>
+                {item.mountPath}
+              </Typography>
+              <Box component="span" px={2}>
+                from
+              </Box>
+              <Typography component="span" className={classes.metadataValueLabel}>
+                {item.name + ` (${item.readOnly ? 'ReadOnly' : 'ReadWrite'})`}
+              </Typography>
             </Typography>
           </Box>
         </Grid>
